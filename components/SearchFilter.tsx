@@ -4,33 +4,27 @@ import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 
 // replace manufacturers with recent queries
-import { SearchQueryProps } from "@/types";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import { SearchFilterProps } from "@/types";
 
-const SearchQuery = ({ query, setQuery }: SearchQueryProps) => {
+const SearchFilter = ({ filter, setFilter }: SearchFilterProps) => {
   const [q, setQ] = useState("");
-  const [recentQueries, setRecentQueries] = useLocalStorage(
-    "recent_queries",
-    []
-  );
 
-  const filteredRecentQueries =
-    q === ""
-      ? recentQueries
-      : recentQueries.filter((item: string) =>
-          item
-            .toLowerCase()
-            .replace(/\s+/g, "")
-            .includes(q.toLowerCase().replace(/\s+/g, ""))
-        );
+  const filters: string[] = [
+    "partial",
+    "full",
+    "free-ebooks",
+    "paid-ebooks",
+    "ebooks",
+  ];
+
   return (
     <div className="search-book">
-      <Combobox value={query} onChange={setQuery}>
+      <Combobox value={filter} onChange={setFilter}>
         <div className="relative w-full">
           {/* Button for the combobox. Click on the icon to see the complete dropdown */}
           <Combobox.Button className="absolute top-[14px]">
             <Image
-              src="/chevron-up-down.svg"
+              src="/arrow-down.svg"
               width={20}
               height={20}
               className="ml-4"
@@ -61,14 +55,12 @@ const SearchQuery = ({ query, setQuery }: SearchQueryProps) => {
               className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
               static
             >
-              {filteredRecentQueries &&
-              filteredRecentQueries.length !== 0 &&
-              q !== "" ? (
+              {filters && filters.length !== 0 && q !== "" ? (
                 <Combobox.Option value={q} className="search-book__option">
                   {q}
                 </Combobox.Option>
               ) : (
-                filteredRecentQueries?.map((item: string) => (
+                filters?.map((item: string) => (
                   <Combobox.Option
                     key={item}
                     className={({ active }) =>
@@ -111,4 +103,4 @@ const SearchQuery = ({ query, setQuery }: SearchQueryProps) => {
   );
 };
 
-export default SearchQuery;
+export default SearchFilter;

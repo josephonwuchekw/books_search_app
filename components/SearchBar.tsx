@@ -5,8 +5,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { SearchQuery } from ".";
+import { SearchFilter } from ".";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import useAPIRequests from "@/hooks/useAPIRequests";
 
 const SearchButton = ({ otherClasses }: { otherClasses: string }) => (
   <button type="submit" className={`-ml-3 z-10 ${otherClasses}`}>
@@ -22,7 +22,7 @@ const SearchButton = ({ otherClasses }: { otherClasses: string }) => (
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
-  const [model, setModel] = useState("");
+  const [filter, setFilter] = useState("");
   const [recentQueries, setRecentQueries] = useLocalStorage(
     "recent_queries",
     []
@@ -33,22 +33,22 @@ const SearchBar = () => {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (query.trim() === "" && model.trim() === "") {
+    if (query.trim() === "" && filter.trim() === "") {
       return alert("Please provide some input");
     }
 
-    updateSearchParams(model.toLowerCase(), query.toLowerCase());
+    updateSearchParams(filter.toLowerCase(), query.toLowerCase());
   };
 
-  const updateSearchParams = (model: string, query: string) => {
+  const updateSearchParams = (filter: string, query: string) => {
     // Create a new URLSearchParams object using the current URL search parameters
     const searchParams = new URLSearchParams(window.location.search);
 
-    // Update or delete the 'model' search parameter based on the 'model' value
-    if (model) {
-      searchParams.set("model", model);
+    // Update or delete the 'filter' search parameter based on the 'filter' value
+    if (filter) {
+      searchParams.set("filter", filter);
     } else {
-      searchParams.delete("model");
+      searchParams.delete("filter");
     }
 
     // Update or delete the 'query' search parameter based on the 'query' value
@@ -78,23 +78,10 @@ const SearchBar = () => {
         <SearchButton otherClasses="sm:hidden" />
       </div>
       <div className="searchbar__item">
-        <Image
-          src="/arrow-down.svg"
-          width={25}
-          height={25}
-          className="absolute w-[20px] h-[20px] ml-4"
-          alt="car model"
-        />
-        <input
-          type="text"
-          name="model"
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-          placeholder="Filter..."
-          className="searchbar__input"
-        />
-        <SearchButton otherClasses="sm:hidden" />
+        <SearchFilter filter={filter} setFilter={setFilter} />
+        {/* <SearchButton otherClasses="sm:hidden" /> */}
       </div>
+
       <SearchButton otherClasses="max-sm:hidden" />
     </form>
   );

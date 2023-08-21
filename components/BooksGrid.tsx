@@ -2,7 +2,7 @@
 import axios from "axios";
 import useAPIRequests from "@/hooks/useAPIRequests";
 import { BooksApiResponse, HomeProps } from "@/types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BookCard from "./BookCard";
 import { Loader } from ".";
 import ShowMore from "./ShowMore";
@@ -17,6 +17,8 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+
+  const ref = useRef<HTMLInputElement | null>(null);
 
   async function fetchBooks() {
     const query = searchParams.query;
@@ -63,6 +65,12 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
     fetchBooks();
   }, [searchParams]);
 
+  useEffect(() => {
+    if (ref && ref.current /* + other conditions */) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [success]);
+
   // const { data, loading, error, success } = useAPIRequests({
   //   query: searchParams.query ? searchParams.query : "",
   //   route: "books",
@@ -75,10 +83,18 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
 
   return (
     <>
-      {loading && <Loader />}
+      {loading && (
+        <div ref={searchParams.query ? ref : null}>
+          <Loader />
+        </div>
+      )}
+
       {books && books.length > 0 ? (
         <section>
-          <div className="home__books-wrapper">
+          <div
+            className="home__books-wrapper"
+            ref={searchParams.query ? ref : null}
+          >
             {books?.map((book) => (
               <BookCard book={book} key={book.id} />
             ))}
@@ -90,7 +106,10 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
             /> */}
         </section>
       ) : (
-        <div className="home__error-container">
+        <div
+          className="home__error-container"
+          ref={searchParams.query ? ref : null}
+        >
           <h2 className="text-black text-xl font-bold">Oops, no results</h2>
         </div>
       )}

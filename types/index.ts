@@ -114,3 +114,8 @@ export interface SearchQueryProps {
   query: string;
   setQuery: (query: string) => void;
 }
+
+export interface SearchFilterProps {
+  filter: string;
+  setFilter: (filter: string) => void;
+}
