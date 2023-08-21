@@ -1,8 +1,6 @@
 import { CustomFilter, Hero, RouterMounting, SearchBar } from "@/components";
-import BookCard from "@/components/BookCard";
 import BooksGrid from "@/components/BooksGrid";
-import ShowMore from "@/components/ShowMore";
-import useAPIRequests from "@/hooks/useAPIRequests";
+import { print, sorting } from "@/constants";
 import { HomeProps, BookProps } from "@/types";
 
 const base_url = "http://localhost:8000/api/v1";
@@ -26,10 +24,17 @@ export default async function Home({ searchParams }: HomeProps) {
 
         <div className="home__filters">
           <SearchBar />
-          {/* <div className='home__filter-container'>
-            <CustomFilter title='fuel' options={fuels} />
-            <CustomFilter title='year' options={yearsOfProduction} />
-          </div> */}
+          <div className="home__filter-container">
+            <div className="flex flex-wrap gap-2 items-center">
+              <span>Print type:</span>{" "}
+              <CustomFilter title="print_type" options={print} />
+            </div>
+
+            <div className="flex flex-wrap gap-2 items-center">
+              <span>Order by:</span>{" "}
+              <CustomFilter title="order_by" options={sorting} />
+            </div>
+          </div>
         </div>
 
         {/* render fetched data */}
@@ -40,14 +45,3 @@ export default async function Home({ searchParams }: HomeProps) {
     </main>
   );
 }
-
-// export async function getServerSideProps() {
-//   const searchParams = URLSearchParams;
-//   console.log("PARAMS:", searchParams);
-
-//   return {
-//     props: {
-//       searchParams: searchParams,
-//     },
-//   };
-// }

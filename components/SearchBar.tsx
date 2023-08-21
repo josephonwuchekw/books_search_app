@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { SearchQuery } from ".";
 import { SearchFilter } from ".";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
@@ -28,6 +27,8 @@ const SearchBar = () => {
     []
   );
 
+  console.log("SearchQuery:", query);
+
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,6 +39,7 @@ const SearchBar = () => {
     }
 
     updateSearchParams(filter.toLowerCase(), query.toLowerCase());
+    setRecentQueries(query.toLowerCase());
   };
 
   const updateSearchParams = (filter: string, query: string) => {
@@ -66,24 +68,49 @@ const SearchBar = () => {
     router.push(newPathname);
   };
 
-  // Save recent queries
-  useEffect(() => {
-    setRecentQueries(query);
-  }, [query]);
-
   return (
-    <form className="searchbar" onSubmit={handleSearch}>
-      <div className="searchbar__item">
-        <SearchQuery query={query} setQuery={setQuery} />
-        <SearchButton otherClasses="sm:hidden" />
+    <>
+      <div className="w-full flex flex-wrap gap-3 items-center">
+        <span>Recently searched:</span>
+        {recentQueries.map((r_query: string) => (
+          <span
+            onClick={() => {
+              setQuery(r_query);
+            }}
+            key={r_query}
+            className="bg-primary-blue text-white rounded-full p-3"
+          >
+            {r_query}
+          </span>
+        ))}
       </div>
-      <div className="searchbar__item">
-        <SearchFilter filter={filter} setFilter={setFilter} />
-        {/* <SearchButton otherClasses="sm:hidden" /> */}
-      </div>
+      <form className="searchbar" onSubmit={handleSearch}>
+        <div className="searchbar__item">
+          <Image
+            src="/chevron-up-down.svg"
+            width={25}
+            height={25}
+            className="absolute w-[20px] h-[20px] ml-4"
+            alt="book query"
+          />
+          <input
+            type="text"
+            name="query"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search..."
+            className="searchbar__input"
+          />
+          <SearchButton otherClasses="sm:hidden" />
+        </div>
+        <div className="searchbar__item">
+          <SearchFilter filter={filter} setFilter={setFilter} />
+          {/* <SearchButton otherClasses="sm:hidden" /> */}
+        </div>
 
-      <SearchButton otherClasses="max-sm:hidden" />
-    </form>
+        <SearchButton otherClasses="max-sm:hidden" />
+      </form>
+    </>
   );
 };
 

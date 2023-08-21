@@ -1,9 +1,22 @@
+import { OptionProps } from "@/types";
+
 export const filters: string[] = [
   "partial",
   "full",
   "free-ebooks",
   "paid-ebooks",
   "ebooks",
+];
+
+export const print: OptionProps[] = [
+  { value: "all", title: "all" },
+  { value: "books", title: "books" },
+  { value: "magazines", title: "magazines" },
+];
+
+export const sorting: OptionProps[] = [
+  { title: "relevance", value: "relevance" },
+  { title: "newest", value: "newest" },
 ];
 
 export const footerLinks = [

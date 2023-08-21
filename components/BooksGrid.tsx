@@ -24,9 +24,13 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
   async function fetchBooks() {
     const query = searchParams.query;
     const filter = searchParams.filter;
+    const printType = searchParams.print_type;
+    const orderBy = searchParams.order_by;
 
     console.log("Query:", query);
     console.log("Filter:", filter);
+    console.log("Print Type:", printType);
+    console.log("Order By:", orderBy);
     if (!query || query.trim().length === 0) {
       setError(true);
       setErrorMessage("Enter your search query");
@@ -85,9 +89,6 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
   // });
 
   const books = success && data ? data.items : [];
-  books.forEach((book) => {
-    console.log(book.volumeInfo);
-  });
 
   return (
     <>
@@ -114,12 +115,14 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
             /> */}
         </section>
       ) : (
-        <div
-          className="home__error-container"
-          ref={searchParams.query ? ref : null}
-        >
-          <h2 className="text-black text-xl font-bold">Oops, no results</h2>
-        </div>
+        !loading && (
+          <div
+            className="home__error-container"
+            ref={searchParams.query ? ref : null}
+          >
+            <h2 className="text-black text-xl font-bold">No books to load</h2>
+          </div>
+        )
       )}
     </>
   );
