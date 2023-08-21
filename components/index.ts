@@ -7,6 +7,7 @@ import CustomFilter from "./CustomFilter";
 import SearchQuery from "./SearchQuery";
 import BooksGrid from "./BooksGrid";
 import RouterMounting from "./RouterMounting";
+import Loader from "./Loader";
 
 export {
   Hero,
@@ -18,4 +19,5 @@ export {
   SearchQuery,
   BooksGrid,
   RouterMounting,
+  Loader,
 };
