@@ -4,8 +4,8 @@ import useAPIRequests from "@/hooks/useAPIRequests";
 import { BooksApiResponse, HomeProps } from "@/types";
 import React, { useEffect, useRef, useState } from "react";
 import BookCard from "./BookCard";
-import { Loader } from ".";
-import { filters } from "@/constants";
+import { Loader, PageBtn } from ".";
+import { filters, print, sorting } from "@/constants";
 import ShowMore from "./ShowMore";
 
 const base_url = "http://localhost:8000/api/v1";
@@ -26,11 +26,10 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
     const filter = searchParams.filter;
     const printType = searchParams.print_type;
     const orderBy = searchParams.order_by;
+    const countsPerPage = searchParams.count_per_page;
 
-    console.log("Query:", query);
-    console.log("Filter:", filter);
-    console.log("Print Type:", printType);
-    console.log("Order By:", orderBy);
+    console.log("Counts Per Page:", countsPerPage);
+
     if (!query || query.trim().length === 0) {
       setError(true);
       setErrorMessage("Enter your search query");
@@ -50,6 +49,15 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
             filters.includes(filter) && {
               filter: filter,
             }),
+          ...(printType &&
+            print.find((x) => x.title === printType) && {
+              print_type: printType,
+            }),
+          ...(orderBy &&
+            sorting.find((x) => x.title === orderBy) && {
+              order_by: orderBy,
+            }),
+          counts_per_page: countsPerPage ? countsPerPage : 12,
         },
       });
 
@@ -83,12 +91,10 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
     }
   }, [success]);
 
-  // const { data, loading, error, success } = useAPIRequests({
-  //   query: searchParams.query ? searchParams.query : "",
-  //   route: "books",
-  // });
-
+  console.log(data);
   const books = success && data ? data.items : [];
+  const totalBooks = success && data ? data.totalItems : 0;
+  const pageLimit = searchParams.count_per_page || 10;
 
   return (
     <>
@@ -109,10 +115,12 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
             ))}
           </div>
 
-          {/* <ShowMore
-              pageNumber={(searchParams.limit || 10) / 10}
-              isNext={(searchParams.limit || 10) > data.length}
-            /> */}
+          <ShowMore
+            pageLimit={pageLimit}
+            total={totalBooks}
+            pageNumber={(searchParams.count_per_page || 10) / 10}
+            isNext={(searchParams.count_per_page || 10) > books.length}
+          />
         </section>
       ) : (
         !loading && (

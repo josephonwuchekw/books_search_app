@@ -9,6 +9,7 @@ import BooksGrid from "./BooksGrid";
 import RouterMounting from "./RouterMounting";
 import Loader from "./Loader";
 import SearchFilter from "./SearchFilter";
+import PageBtn from "./PageBtn";
 
 export {
   Hero,
@@ -22,4 +23,5 @@ export {
   RouterMounting,
   Loader,
   SearchFilter,
+  PageBtn,
 };

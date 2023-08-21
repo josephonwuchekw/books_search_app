@@ -43,7 +43,7 @@ const SearchFilter = ({ filter, setFilter }: SearchFilterProps) => {
               setQ(event.target.value);
               // setRecentQueries(event.target.value);
             }} // Update the search query when the input changes
-            placeholder="Search..."
+            placeholder="Filter..."
           />
 
           {/* Transition for displaying the options */}

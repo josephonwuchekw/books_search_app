@@ -107,6 +107,8 @@ export interface CustomFilterProps {
 
 export interface ShowMoreProps {
   pageNumber: number;
+  pageLimit: number;
+  total: number;
   isNext: boolean;
 }
 

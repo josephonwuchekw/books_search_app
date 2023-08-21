@@ -5,30 +5,33 @@ import { useRouter } from "next/navigation";
 import { ShowMoreProps } from "@/types";
 import { updateSearchParams } from "@/utils";
 import { Button } from "@/components";
+import { useEffect, useState } from "react";
 
-const ShowMore = ({ pageNumber, isNext }: ShowMoreProps) => {
+const ShowMore = ({ pageNumber, isNext, pageLimit, total }: ShowMoreProps) => {
+  const [more, setMore] = useState(false);
+
   const router = useRouter();
 
   const handleNavigation = () => {
-    // Calculate the new limit based on the page number and navigation type
-    const newLimit = (pageNumber + 1) * 10;
-
-    // Update the "limit" search parameter in the URL with the new value
-    const newPathname = updateSearchParams("limit", `${newLimit}`);
-
-    router.push(newPathname);
+    if (more) {
+      setMore(false);
+      const newPathname = updateSearchParams("count_per_page", "12");
+      router.push(newPathname);
+    } else {
+      setMore(true);
+      const newPathname = updateSearchParams("count_per_page", "100");
+      router.push(newPathname);
+    }
   };
 
   return (
     <div className="w-full flex-center gap-5 mt-10">
-      {!isNext && (
-        <Button
-          btnType="button"
-          title="Show More"
-          containerStyles="bg-primary-blue rounded-full text-white"
-          handleClick={handleNavigation}
-        />
-      )}
+      <Button
+        btnType="button"
+        title="Next"
+        containerStyles="bg-primary-blue rounded-full text-white"
+        handleClick={handleNavigation}
+      />
     </div>
   );
 };
