@@ -28,8 +28,6 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
     const orderBy = searchParams.order_by;
     const countsPerPage = searchParams.count_per_page;
 
-    console.log("Counts Per Page:", countsPerPage);
-
     if (!query || query.trim().length === 0) {
       setError(true);
       setErrorMessage("Enter your search query");
