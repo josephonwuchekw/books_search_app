@@ -1,3 +1,11 @@
+export const filters: string[] = [
+  "partial",
+  "full",
+  "free-ebooks",
+  "paid-ebooks",
+  "ebooks",
+];
+
 export const footerLinks = [
   {
     title: "About",

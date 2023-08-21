@@ -44,7 +44,6 @@ const SearchQuery = ({ query, setQuery }: SearchQueryProps) => {
             displayValue={(item: string) => item}
             onChange={(event) => {
               setQ(event.target.value);
-              // setRecentQueries(event.target.value);
             }} // Update the search query when the input changes
             placeholder="Search..."
           />

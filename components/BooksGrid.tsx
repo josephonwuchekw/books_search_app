@@ -5,6 +5,7 @@ import { BooksApiResponse, HomeProps } from "@/types";
 import React, { useEffect, useRef, useState } from "react";
 import BookCard from "./BookCard";
 import { Loader } from ".";
+import { filters } from "@/constants";
 import ShowMore from "./ShowMore";
 
 const base_url = "http://localhost:8000/api/v1";
@@ -22,7 +23,10 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
 
   async function fetchBooks() {
     const query = searchParams.query;
+    const filter = searchParams.filter;
+
     console.log("Query:", query);
+    console.log("Filter:", filter);
     if (!query || query.trim().length === 0) {
       setError(true);
       setErrorMessage("Enter your search query");
@@ -38,6 +42,10 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
         withCredentials: false,
         params: {
           q: query,
+          ...(filter &&
+            filters.includes(filter) && {
+              filter: filter,
+            }),
         },
       });
 

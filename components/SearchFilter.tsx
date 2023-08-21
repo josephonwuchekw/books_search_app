@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
+import { filters } from "@/constants";
 
 // replace manufacturers with recent queries
 import { SearchFilterProps } from "@/types";
@@ -9,13 +10,15 @@ import { SearchFilterProps } from "@/types";
 const SearchFilter = ({ filter, setFilter }: SearchFilterProps) => {
   const [q, setQ] = useState("");
 
-  const filters: string[] = [
-    "partial",
-    "full",
-    "free-ebooks",
-    "paid-ebooks",
-    "ebooks",
-  ];
+  const filteredFilters =
+    q === ""
+      ? filters
+      : filters.filter((item: string) =>
+          item
+            .toLowerCase()
+            .replace(/\s+/g, "")
+            .includes(q.toLowerCase().replace(/\s+/g, ""))
+        );
 
   return (
     <div className="search-book">
@@ -55,12 +58,12 @@ const SearchFilter = ({ filter, setFilter }: SearchFilterProps) => {
               className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
               static
             >
-              {filters && filters.length !== 0 && q !== "" ? (
+              {filteredFilters && filteredFilters.length !== 0 && q !== "" ? (
                 <Combobox.Option value={q} className="search-book__option">
                   {q}
                 </Combobox.Option>
               ) : (
-                filters?.map((item: string) => (
+                filteredFilters?.map((item: string) => (
                   <Combobox.Option
                     key={item}
                     className={({ active }) =>
