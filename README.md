@@ -22,31 +22,39 @@ BooksHub is a web application that allows users to search for books using variou
 
 - **Google Books API:** An API that allows the application to retrieve book information, including search results and book details.
 
-- **CSS Modules:** TailwindCSS.
+- **CSS Modules:** TailwindCSS and Headless UI.
 
 ## Installation and Usage
 
 1. Clone this repository to your local machine.
+
    ```sh
    git clone git@github.com:josephonwuchekw/books_search_app.git
 
+   ```
+
 2. Navigate to the project directory.
-    ```sh
-    cd books_search_app
-    
+   ```sh
+   cd books_search_app
+
+   ```
 3. Install the required dependencies using npm or yarn.
+
    ```sh
    npm install
    # or
    yarn install
 
+   ```
+
 4. Start the API server from this repo:
    https://github.com/josephonwuchekw/books_search_api
 
-4. Start the development server.
+5. Start the development server.
    ```sh
    npm run dev
    # or
    yarn dev
-   
-4. Open your web browser and navigate to http://localhost:3000 to access the application.
+
+   ```
+6. Open your web browser and navigate to http://localhost:3000 to access the application.

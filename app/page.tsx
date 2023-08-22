@@ -3,9 +3,6 @@ import BooksGrid from "@/components/BooksGrid";
 import { print, sorting } from "@/constants";
 import { HomeProps, BookProps } from "@/types";
 
-const base_url = "http://localhost:8000/api/v1";
-const route = "books";
-
 export default async function Home({ searchParams }: HomeProps) {
   // Fetch API data here
 
