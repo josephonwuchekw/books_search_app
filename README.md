@@ -1,34 +1,52 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BooksHub
 
-## Getting Started
+BooksHub is a web application that allows users to search for books using various search criteria. This application is built using the Next.js framework. The application utilizes the Google Books API to retrieve book information and display search results in an intuitive and user-friendly interface.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- **Book Search:** Users can search by keywords, titles, authors, or any other relevant information in the search bar to retrieve a list of matching books.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Filtering and Sorting:** The application allows users to filter and sort search results based on criteria such as relevance and print type
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Book Details:** Users can click on a specific book from the search results to view detailed information about the book, including its cover image, title, author, and a brief description.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Responsive Design:** The application is designed to work seamlessly across various screen sizes and devices, providing an optimal user experience on both desktop and mobile devices.
 
-## Learn More
+- **Server-side Rendering:** Leveraging the power of Next.js, the application implements server-side rendering to enhance performance and SEO optimization.
 
-To learn more about Next.js, take a look at the following resources:
+## Technologies Used
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Next.js:** A React framework that provides server-side rendering, routing, and other powerful features to build modern web applications.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **React:** A JavaScript library for building user interfaces, used as the foundation of the Next.js framework.
 
-## Deploy on Vercel
+- **Google Books API:** An API that allows the application to retrieve book information, including search results and book details.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **CSS Modules:** TailwindCSS.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Installation and Usage
+
+1. Clone this repository to your local machine.
+   ```sh
+   git clone git@github.com:josephonwuchekw/books_search_app.git
+
+2. Navigate to the project directory.
+    ```sh
+    cd books_search_app
+    
+3. Install the required dependencies using npm or yarn.
+   ```sh
+   npm install
+   # or
+   yarn install
+
+4. Start the API server from this repo:
+   https://github.com/josephonwuchekw/books_search_api
+
+4. Start the development server.
+   ```sh
+   npm run dev
+   # or
+   yarn dev
+   
+4. Open your web browser and navigate to http://localhost:3000 to access the application.
