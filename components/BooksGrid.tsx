@@ -1,15 +1,14 @@
 "use client";
 import axios from "axios";
-import useAPIRequests from "@/hooks/useAPIRequests";
 import { BooksApiResponse, HomeProps } from "@/types";
 import React, { useEffect, useRef, useState } from "react";
 import BookCard from "./BookCard";
-import { Loader, PageBtn } from ".";
-import { filters, print, sorting } from "@/constants";
+import { Loader } from ".";
+import { filters, print, sorting, books_route, base_url } from "@/constants";
 import ShowMore from "./ShowMore";
 
-const base_url = "http://localhost:8000/api/v1";
-const route = "books";
+// const base_url = "http://localhost:8000/api/v1";
+// const books_route = "books";
 
 const BooksGrid = ({ searchParams }: HomeProps) => {
   const [data, setData] = useState<BooksApiResponse | null>(null);
@@ -22,6 +21,8 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
   const ref = useRef<HTMLInputElement | null>(null);
 
   async function fetchBooks() {
+    console.log("API:", base_url);
+
     const query = searchParams.query;
     const filter = searchParams.filter;
     const printType = searchParams.print_type;
@@ -33,7 +34,7 @@ const BooksGrid = ({ searchParams }: HomeProps) => {
       setErrorMessage("Enter your search query");
       return;
     }
-    let url = `${base_url}/${route}/`;
+    let url = `${base_url}/${books_route}/`;
     setLoading(true);
 
     try {

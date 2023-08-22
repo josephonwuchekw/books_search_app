@@ -72,17 +72,18 @@ const SearchBar = () => {
     <>
       <div className="w-full flex flex-wrap gap-3 items-center">
         <span>Recently searched:</span>
-        {recentQueries.map((r_query: string) => (
-          <span
-            onClick={() => {
-              setQuery(r_query);
-            }}
-            key={r_query}
-            className="bg-primary-blue text-white rounded-full p-3"
-          >
-            {r_query}
-          </span>
-        ))}
+        {recentQueries &&
+          recentQueries.map((r_query: string) => (
+            <span
+              onClick={() => {
+                setQuery(r_query);
+              }}
+              key={r_query}
+              className="bg-primary-blue text-white rounded-full p-3"
+            >
+              {r_query}
+            </span>
+          ))}
       </div>
       <form className="searchbar" onSubmit={handleSearch}>
         <div className="searchbar__item">
